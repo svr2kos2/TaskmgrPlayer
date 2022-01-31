@@ -111,8 +111,12 @@ void FindWnd()
 	wcout << L"Try find " << config::WindowTitle << L" " << config::WindowClassName << endl;
 	HWND TaskmgrHwnd = FindWindow(config::WindowClassName.c_str(), config::WindowTitle.c_str());
 	if (TaskmgrHwnd != NULL) {
-		ClassNameToEnum = config::ChildClassName;
-		EnumChildWindows(TaskmgrHwnd, EnumChildWindowsProc, NULL);
+		if (config::ChildClassName.empty())
+			EnumHWnd = TaskmgrHwnd;
+		else {
+			ClassNameToEnum = config::ChildClassName;
+			EnumChildWindows(TaskmgrHwnd, EnumChildWindowsProc, NULL);
+		}
 	}
 }
 
